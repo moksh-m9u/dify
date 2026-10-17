@@ -781,7 +781,9 @@ class AdvancedChatAppGenerateTaskPipeline(GraphRuntimeStateSupport):
                 self._save_message(session=session, graph_runtime_state=resolved_state)
             self._emit_message_trace()
 
+            yield self._message_end_to_stream_response()
             yield workflow_finish_resp
+            return
         elif event.stopped_by in (
             QueueStopEvent.StopBy.INPUT_MODERATION,
             QueueStopEvent.StopBy.ANNOTATION_REPLY,
